@@ -1,0 +1,21 @@
+@startuml
+left to right direction
+
+package "Frontend (Vue.js)" {
+    [Frontend]
+}
+
+package "Backend (NodeJS)" {
+    [API]
+    [Git]
+}
+
+database "Databáze (MySQL)" {
+    [Databáze]
+}
+
+[Frontend] <..> [API] : REST API
+[API] <..> [Databáze] : Přístup k datům
+[API] <..> [Git] : Ukládání anotací
+
+@enduml

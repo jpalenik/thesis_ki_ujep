@@ -1,0 +1,13 @@
+\section{Struktura aplikace}
+Aplikace je strukturována do tří hlavních komponent, jak je znázorněno na UML diagramu komponent (viz obrázek \ref{fig:dia_compo}). Uživatelské rozhraní je implementováno prostřednictvím aplikace vytvořené ve frameworku Vue.js. Serverová část aplikace je realizována v Node.js a komunikuje s frontendem prostřednictvím HTTPS protoklu RESTful API\footnote{RESTful API (Representational State Transfer) je architektonický styl pro návrh síťových aplikací. Využívá HTTPS požadavky pro přístup a manipulaci s datovými reprezentacemi, čímž umožňuje snadnou a intuitivní komunikaci mezi klientem a serverem.}. Pro efektivní ukládání a verzování postupu anotací byl použit lokální Git repozitář.
+
+\obrazek{component-diagram.png}{Diagram komponent}{fig:dia_compo}
+
+V následující části je detailněji popsané rozvržení uživatelského rozhraní. Aplikace má 4 hlavní části:
+
+\begin{itemize}
+    \item projekty,
+    \item datasety,
+    \item supervize,
+    \item správa uživatelů.
+\end{itemize}

@@ -1,0 +1,89 @@
+\section{2D Editor}
+
+2D editor představuje klíčový a nepostradatelný prvek v rámci aplikace, jelikož umožňuje provádět úkoly spojené s anotací obrázků. Jak již bylo zmíněno, tento editor byl implementován s využitím knihovny Paper.js. Jeho struktura je rozvržena do tří hlavních částí, které jsou navrženy s ohledem na uživatelskou přívětivost a efektivitu práce, kterou mimo jiné zrychlují klávesové zkratky.
+
+\subsection{Postup anotace}
+Pro každý projekt jsou vybrány reprezentativní datové sady a klasifikační třídy. Anotátoři začínají anotovat snímky, které nebyly dříve označeny, nebo které byly předem klasifikovány. Postupně anotují každou klasifikační třídu zvlášť. Každá klasifikační třída má své definované pořadí. Anotace vrstev probíhá směrem od objektů nacházející se v pozadí až po objekty nacházející se v popředí. Každý objekt musí být označen s dostatečnou přesností, aby byla zajištěna kvalita anotací.
+
+\subsection{Navigační panel}
+Navigační panel poskytuje přístup k editačním nástrojům pro manipulaci s polygony a čárami ve snímcích. Dále zahrnuje možnost kroku zpět a vpřed při práci s anotacemi. V pravé části navigačního panelu jsou následující funkce:
+
+\begin{itemize}
+    \item \textbf{Uložit anotaci:} 
+    
+    Anotátoři mohou uložit svůj postup přímo na server pro uchování dat. Změny v anotaci se z důvodu menší pravděpodobnosti ztráty dat uchovávají v paměti webového prohlížeče.  
+    
+    \item \textbf{Zobrazit nápovědu projektu:} 
+    
+    Po kliknutí na ikonu \textit{i} se zobrazí ve vyskakovacím okně nápověda k projektu. Nápověda obsahuje instrukce pro správnou anotaci dat. 
+
+    \item \textbf{Zobrazit nápovědu editoru:} 
+    
+    Umožňuje rychlý přístup k nápovědě editoru. V této nápovědě jsou popsané klávesové zkratky k editačním nástrojům.
+\end{itemize}
+
+Pohled přiřazeného anotátora k obrázku na navigační panel, viz \vref{fig:np-a}. Anotátor nemá přistup k panelu supervize z důvodu řízení právem -- nemůže přiřadit anotaci jinému uživateli nebo ji schvalovat.
+\obrazek{editor/top-panel-annotator.png}{Navigační panel - anotátor}{fig:np-a}
+
+
+Pro supervizory jsou k dispozici další funkce:
+
+\begin{itemize}
+    \item \textbf{Časomíra:} 
+    
+    Supervizoři mohou sledovat čas strávený v editoru. Tato informace je pro anotátory skryta, z důvodu předcházení možnému nastavování času.
+    
+    \item \textbf{Workflow management:} 
+    
+    Supervizoři mohou provádět akce související s řízením pracovního postupu, například přiřazovat obrázky anotátorům nebo schvalovat anotace.
+
+    \item \textbf{Časová osa:} 
+    
+    Supervizoři mohou sledovat postup anotace, jednotlivé odevzdání a srovnávat odevzdané verze. Mohou se jednoduše vrátit k předchozím verzím odevzdání.
+\end{itemize}
+
+Pro zjednodušení práce supervizora, který také může editovat obrázky pouze pokud jsou mu přiřazené, slouží rozlišení navigačního panelu barvou. Pokud má supervizor obrázek přiřazený, tak je zobrazen standardním způsobem, viz (\vref{fig:np-b}). 
+\obrazek{editor/top-panel-assigned.png}{Navigační panel - supervizor}{fig:np-b}
+
+V opačném případě je tento panel podbarvený červeně (viz \vref{fig:np-c}). Po kliknutí na tlačítko "uložit anotaci" se mu zobrazí upozornění o tom, že  nemůže ukládat postup.
+\obrazek{editor/top-panel-notassigned.png}{Navigační panel - supervizor}{fig:np-c}
+
+Tento jednoduchý přístup zajistí bezpečný postup při anotaci, díky kterému se vyloučí možnost, aby více uživatelů mohlo najednou editovat stejný obrázek.
+
+\subsection{Editační nástroje}
+V následující části jsou popsány editační nástroje nezbytné pro provádění anotací. Každou z těchto akcí je možné spustit buď kliknutím na tlačítko v hlavním panelu nebo použitím klávesové zkratky.
+
+\begin{itemize}
+  \item \textbf{Kreslení}
+    
+  Tento nástroj je navržen pro vytváření nových polygonů nebo čar. Je to základní nástroj, který slouží k označování tříd. Rozhodnutí, zda vytvářet čáru nebo polygon, závisí na aktuálně vybrané klasifikační vrstvě. Pro tento nástroj byla přidělena klávesová zkratka F a také se aktivuje jako hlavní nástroj po kliknutí levého tlačítka myši na editor. Po prvním levým kliknutí myší se do obrázku přidá nový bod, za kterým se čára "natahuje" při pohybu myši. Dalším kliknutím levého tlačítka myši se vytváří nový bod v tvořeném polygonu. Tato sekvence pokračuje až do ukončení kliknutím pravým tlačítkem myši. Funkcionalita tohoto nástroje je založena na rozšíření objektu \textbf{Path}.
+
+  \item \textbf{Vyříznutí polygonu}
+  
+  Nástroj pro vyříznutí díry do polygonu je nezbytný z několika důvodů. Prvním a klíčovým faktorem je zlepšení procesu označování a anotace dat. V situacích, kdy je třeba anotovat objekty s komplexními strukturami, jako jsou mostní konstrukce, může polygonální obrys překrývat různé části objektu. Bez možnosti vytvářet díry v polygonu by anotátoři museli polygon rozdělit na několik menších polygonů, což by mohlo značně zkomplikovat proces a vedlo by k nepřehlednému anotačnímu datu.
+  
+  Druhým aspektem je zachování přesnosti anotací. Vytváření díry do polygonu umožňuje přesně vymezit oblast, která nepatří do objektu a tím dosáhnout vysoké kvality a přesnosti anotace. 
+
+  \item \textbf{Rozdělení polygonu}
+  
+  Rozdělení polygonu je další nezbytný nástroj, zejména v případě anotování rozsáhlejších struktur a při opravách. Příkladem pro použití toho nástroje může být situace, kdy anotátor označuje stromy a mylně označí jedním polygonem 2 stromy vedle sebe. Díky tomuto nástroji je jednoduše možné tyto objekty oddělit, bez nutnosti smazat a znovu označit dvě nové oblasti. Také se může hodit v případě označení více různých tříd jedním polygonem.
+
+  \item \textbf{Přesunutí}
+  
+  Nástroj přesunutí je nezbytný pro projekty, ve kterých se označují instance. Umožňuje měnit pořadí polygonů, neboli měnit jejich z-index vůči ostatním. Z důvodu přehlednosti, zejména při velkém počtu polygonů, je nástroj navržen tak, aby umožňoval přesun polygonů pouze mezi těmi, které překrývá nebo se s nimi protíná.
+  
+  Po vybrání tohoto nástroje a kliknutím levým tlačítkem myši na polygon se polygon zvýrazní červeným okrajem. V hlavním panelu editoru se zobrazí jeho pořadí relativně k polygonům, které překrývá nebo s nimiž se protíná. Na obrázku \vref{fig:ed_zind} je vidět, že  vybraný polygon je v pořadí druhý ze čtyř. Pro posunutí polygonu nahoru lze použít klávesovou zkratku \textit{Q} a pro posun dolů \textit{A}.
+
+  \obrazek{editor/z-index.png}{Nástroj přesunutí}{fig:ed_zind}
+
+  \item \textbf{Změna vrstvy polygonu}
+  
+  Nástroj pro změnu vrstvy polygonu ve 2D editoru je užitečný pro opravu možných chyb v anotaci. Umožňuje změnit vrstvu polygonu bez potřeby jeho mazání a znovuvytváření. S tímto nástrojem lze snadno přesunout polygon z jedné vrstvy, například \textit{Listnatý strom}, do jiné vrstvy, jako je \textit{Keř}.
+
+  \item \textbf{Odevzdání}
+  
+  Anotátoři jsou povinni svůj pracovní postup pravidelně ukládat na server. Během anotačního procesu jsou data nejprve ukládána do lokálního úložiště prohlížeče. Z bezpečnostních důvodů je však po určité odpracované době nezbytné tyto údaje přenést na server. Tento krok se provádí kliknutím na tlačítko pro odevzdání, což vyvolá zobrazení modálního okna (viz Obrázek \vref{fig:ed_odevdzani}). V tomto okně je automaticky předvyplněn doba práce zaznamenaná aplikací, kterou může anotátor upravit podle potřeby. Na server se následně ukládá jak původní, tak modifikovaný časový údaj práce. Kromě toho má anotátor možnost připojit poznámku k ukládaným datům, poskytující další informace o aktuálním stavu práce, jako například specifika anotací střech.
+
+  \obrazek{editor/anotace-odevzdani.png}{Odevzdání na server}{fig:ed_odevdzani}
+
+\end{itemize}

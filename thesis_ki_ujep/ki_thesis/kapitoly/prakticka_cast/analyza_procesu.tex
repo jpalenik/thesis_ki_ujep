@@ -1,0 +1,22 @@
+\section{Analýza procesů}
+Analýza procesu anotace obrázků je zásadní pro pochopení celého procesu získávání dat. Proces je rozdělen do čtyř hlavních fází, s důrazem na praktické aspekty každého kroku. Proces je vizuálně zobrazen sekvenčním diagramem, viz \vref{fig:analyza_procesu}.
+
+Hlavním důvodem pro definování procesu anotování obrázků je potřeba nastavit jej tak, aby byl co nejefektivnější a nejpřesnější. Pro každý projekt je nutné vybrat reprezentativní vzorek dat, který je následně anotován určenými třídami. Tyto třídy jsou později využity pro automatické anotování. Aby byla zajištěna vysoká kvalita a přesnost automatických anotací, je nezbytné, aby data byla nejprve správně a pečlivě označena člověkem. Vzhledem k možným chybám ze strany anotátorů je nezbytné do procesu zahrnout etapu kontroly, která zajišťuje, že data splňují všechny požadavky na kvalitu – například přesnost překryvů, pořadí vrstev a celková kvalita anotací. Tento kontrolní krok je realizován pracovníkem s příslušnými znalostmi, který zajišťuje, že data jsou vhodná pro další zpracování strojovým učením. Jakákoli chyba v počátečních anotacích může vést k nepřesnostem v automatickém označování pomocí konvolučních neuronových sítí (CNN).
+
+\obrazek{analyza_procesu.png}{Analýza procesu anotace obrázků}{fig:analyza_procesu}
+
+\subsubsection{Příprava a nastavení projektu}
+  
+  Nejprve je nutné připravit správná data pro trénink modelu strojového učení, což závisí na specifických požadavcích na označená data. Tuto úlohu plní administrátor, který vybírá obrázky odpovídající požadovaným anotačním třídám tak, aby zajistil, že data jsou reprezentativní a rozmanitá pro konkrétní trénovací úkol. Po výběru obrázků vytvoří administrátor nový projekt v aplikaci a definuje klasifikační třídy. Přesná definice těchto tříd je zásadní pro anotační fázi, neboť jakékoli chyby v této fázi mohou vést k nepřesnostem ve výsledcích strojového učení.
+
+
+\subsubsection{Přidělení úloh a začátek anotace}
+Po nastavení projektu přiřadí administrátor projekt supervizorovi, který je zodpovědný za správu a dohled nad anotačním procesem. Supervizor poté nastaví přístupová práva pro anotátory a přidělí jim obrázky k anotaci. Anotátoři, vyškoleni v rozpoznávání a kategorizaci objektů na obrázcích, začnou anotovat podle definovaných tříd. Jejich úkolem je pečlivě označovat relevantní prvky na obrázcích, což vyžaduje pozornost k detailům a porozumění kontextu obrázků. Pro lepší pochopení kontextu jim mohou pomoci GPS souřadnice obrázků, ty může administrátor nastavit v datasetech. Po nastavení GPS souřadnic mají anotátoři možnost zobrazit vyskakovací okno s mapou, viz \vref{fig:editor_mapa}.
+
+\obrazek[0.8\textwidth]{editor_mapa.png}{Zobrazení modalu s polohou}{fig:editor_mapa}
+
+\subsubsection{Kontrola a iterace anotace}
+Jakmile anotátor úspěšně dokončí anotaci obrázku, je její výsledek předán supervizorovi ke kontrole. Supervizor následně důkladně prochází každou anotaci, aby zaručil jejich přesnost a shodu s definovanými klasifikačními třídami. V případě zjištění chyb nebo nepřesností je obrázek vrácen anotátorovi k opravě. Vrácení k opravě obsahuje popis nalezené nepřesnosti. V nutných případech supervizor upřesní chybu anotátorovi přes chat s připojeným snímkem obrazovky. Proces kontroly se může opakovat několikrát, dokud nebude obrázek anotován správně. Opakovaná kontrola je nezbytná pro zajištění kvality a spolehlivosti anotací, důležitých pro správnost tréninkových dat v oblasti strojového učení.
+
+\subsubsection{Finální schválení a export dat}
+Po schválení anotace supervizorem jsou obrázky předány zpět administrátorovi. Administrátor provádí konečnou kontrolu a dává souhlas k použití obrázků v tréninkovém datasetu. Jakmile administrátor schválí obrázky, se data vyexportují do formátu GeoJSON. Tento formát je široce využíván pro geoprostorová data a je vhodný pro účely strojového učení. Exportovaná data se následně používají jako dataset pro trénink algoritmů strojového učení.

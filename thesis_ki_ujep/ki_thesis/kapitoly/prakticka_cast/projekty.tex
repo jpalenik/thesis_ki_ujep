@@ -1,0 +1,126 @@
+\section{Projekt}
+V rámci aplikace je klíčovým prvkem projekt. Projektem rozumíme soubor datasetů, které jsou označovány stejnou sadou klasifikačních tříd. Projekty slouží k organizaci a správě obrázků z různých datových sad, které mají být zpracovány a anotovány.
+
+Důležitými činnostmi v rámci projektu jsou:
+\begin{itemize}
+    \item přidávání obrázků do projektu,
+    \item přiřazování anotátorům k editaci,
+    \item správa klasifikačních tříd,
+    \item nastavení priority jednotlivých datasetů z pohledu důležitosti označování,
+    \item vyřazování anotací administrátorem,
+    \item schvalování anotací administrátorem,
+    \item kontrola anotací supervizorem,
+    \item export dat.
+\end{itemize}
+
+V následující části budou tyto části podrobněji popsány.
+
+\subsubsection{Práce s projekty}
+Projekt lze vytvořit pomocí tří jednoduchých kroků, neboli průvodce (wizard). 
+
+V prvním kroku se o projektu vyplní základní informace, jako je \textit{jméno} projektu a jeho \textit{alias}, který slouží k exportům dat. Použití aliasu je vhodné zejména k exportu dat a pro jednodušší procházení exportované anotace v příkazové řádce bez mezer.
+
+Dále se vybírá typ projektu. Typy projektů a jejich rozdíly jsou následující:
+
+\begin{enumerate}
+    \item \textbf{Obecná segmentace}
+
+    V obecné segmentaci obrázků jsou polygony dané klasifikační třídy uložené ve stejné vrstvě. Jednotlivým klasifikačním třídám lze nastavovat jejich pořadí (z-index).
+
+    \item \textbf{Obrázková segmentace instancí}
+
+    V projektu typu "obrázková segmentace instancí" má každý polygon definované pořadí nezávisle na klasifikační třídě. Jednotlivé polygony tedy mají definované pořadí vůči všem ostatním polygonům nezávisle na pořadí klasifikačních tříd.
+    
+\end{enumerate}
+
+
+Rozdíl mezi jednotlivými typy projektů je následující:
+
+V obrázkové segmentaci je například klasifikační třída \textit{strom} (zelená barva) ve druhém pořadí. Klasifikační třída \textit{vozidlo} je v pořadí prvním, tedy před stromy. V tomto případě nelze rozlišit, jestli je dané auto na snímku před, nebo za stromem. Tento přístup má výhodu při trénování algoritmů, které mají za úkol pouze kategorizovat objekty (viz obrázek \vref{fig:obrazkova}). 
+\obrazek[0.7\textwidth]{projekt/vrstvy.png}{Obecná segmentace}{fig:obrazkova}
+
+V případě obrázkové segmentace instací kdy nejsou všechny polygony stejné třídy ve stejné vrstvě je možné určit pořadí jednotlivých objektů nezávisle na pořadí vrstvy. Rozdíl je patrný z uspořádaní vrstev, kde pravý strom na obrázku \vref{fig:instance} je před označenou vrstvou vozidlo.
+
+\obrazek[0.7\textwidth]{projekt/instance.png}{Obrázková segmentace instancí}{fig:instance}
+
+
+\subsubsection{Příklad rozdělení projektů}
+Seskupení klasifikací do jednotlivých projektů je klíčové z důvodu možnosti specializace a přizpůsobení anotačního procesu konkrétním potřebám a cílovým využitím. Následují příklady projektů, které ilustrují tuto potřebu:
+
+\begin{itemize}
+  \item \textbf{Letecké snímky:}
+  
+  V projektu zaměřeném na letecké snímky jsou anotovány obrázky pořízené z výšky, například letadlem nebo dronem. Tyto snímky mají vysoké rozlišení, často v řádu centimetrů na pixel. Tento projekt je vhodný pro označování různých objektů, jako jsou budovy, střechy, silnice, stromy a zemědělská půda. Data z tohoto projektu lze využít pro automatickou kategorizaci objektů pro katastrální úřady, identifikaci stromů v oblasti nebo další aplikace, které vyžadují detailní informace z leteckých snímků.
+  
+  \item \textbf{Okna}
+  
+  Klasifikace oken využívá uliční snímky. Uliční snímky jsou obvykle pořizovány pomocí vozidel vybavených sadou kamer, přesným GPS systémem a technologií Lidar. Klasifikační třídy zahrnují okna, rámy a dveře. Tento projekt umožňuje trénovat algoritmus na rozpoznávání a kategorizaci okenních prvků na budovách. Příkladem využití může být počítání okenních ploch na různých budovách, nebo zaměření určitých typů oken ve městském prostředí.
+\end{itemize}
+
+\subsubsection{Přidávání obrázků do projektu}
+Do projektu je možné přidávat obrázky z různých datasetů. Každý obrázek může být v projektu nanejvýš jednou. Pro přidání obrázku do projektu existují dva přístupy:
+
+\begin{itemize}
+\item \textbf{Přidání neoznačeného obrázku:} 
+
+Neoznačený obrázek lze přidat rovnou z datasetu. Tento přístup je vhodný pro přidání nových obrázků, které ještě nebyly anotovány nebo není nastavené mapování tříd mezi projekty.
+
+\item \textbf{Přesun již označeného obrázku:}
+
+V případě, že jsou již v projektu A označené obrázky, které se mají přidat do projektu B, může být vhodnější nastavit mezi projekty mapování tříd a anotace převést. Například, pokud v projektu A jsou třídy \textit{listnatý strom}, \textit{keř} a \textit{jehličnatý strom}, a v projektu B je třída nazvaná pouze \textit{vegetace}. Předpokládejme, že je nastavené mapování tříd, takže třídy \textit{listnatý strom} a \textit{jehličnatý strom} se mapují na třídu \textit{vegetace}, zatímco třída \textit{keř} nemá nastavené žádné mapování.
+
+Při přesunu obrázků do projektu B dochází k následujícím změnám v klasifikačních třídách:
+
+\begin{itemize}
+\item Obrázky s třídami \textit{listnatý strom} a \textit{jehličnatý strom} jsou převedeny na třídu \textit{vegetace} v rámci projektu B.
+\item Obrázky s třídou \textit{keř}, která nemá nastavené žádné mapování, se po přesunu do projektu B ztratí.
+\end{itemize}
+
+\end{itemize}
+
+\subsubsection{Klasifikační třídy}
+
+Klasifikační třídy jsou v rámci projektu nezbytné pro rozpoznávání a kategorizaci objektů a prvků zobrazených na obrázcích. Tyto třídy umožňují uživateli systematicky a přesně identifikovat a označovat objekty, jako například střechy, okna, koleje, stromy, silnice a mnoho dalších. 
+
+V projektu je možné klasifikační třídy nadefinovat a seřadit podle vrstev, což umožňuje lepší vizuální reprezentaci vztahů mezi objekty. Například stromy mohou být nad silnicemi nebo střechy nad fasádou budovy. Třídy mohou mít dva typy - čáry nebo polygony, které slouží k označování obrázků.
+
+Atributy klasifikačních tříd, jako jsou alias, jméno, typ třídy, barva ohraničení, šířka čáry, barva vykreslování a popis, jsou zásadní pro správné fungování tříd v rámci webové aplikace a některé z nich nutné k exportu. Atributy klasifikačních tříd jsou Jejich význam je následující:
+
+\begin{itemize}
+\item \textbf{Alias:}
+
+Alias unikátní název v rámci projektu pro klasifikační třídu. Alias může být zkratka, nebo jiný název, který systému usnadní práci s třídami. V rámci projektu musí být unikátní.
+
+\item \textbf{Jméno:}
+
+Jméno je označení klasifikační třídy, které slouží k její jednoznačné identifikaci v rámci projektu.
+
+\item \textbf{Typ třídy:}
+
+Typ třídy určuje, zda se jedná o čáru nebo polygon. Tento atribut je důležitý pro správné zobrazení a export tříd v rámci projektu. Příkladem může být označování oken. Pro označení plochy okna se použije třída typu polygon. Aby bylo možné jednoduše označit i rámy daného okna, tak se pro třídu \textit{rám} použije typ třídy čára.
+
+\item \textbf{Barva ohraničení:}
+
+Barva ohraničení určuje, jakým způsobem bude zobrazeno ohraničení dané třídy na obrázku. Tato barva je důležitá pro vizuální identifikaci třídy uživatelem, ale nemá vliv na další zpracování.
+
+\item \textbf{Šířka čáry:}
+
+Šířka čáry určuje tloušťku ohraničení klasifikační třídy. Tento atribut pomáhá uživateli lépe rozlišit mezi jednotlivými třídami na obrázku. Stejně jako barva ohraničení nemá vliv na další zpracování.
+
+\item \textbf{Popis:}
+
+Popis klasifikační třídy poskytuje další informace o třídě a jejím účelu. Tento atribut může být užitečný pro uživatele, kteří nejsou obeznámeni s daným projektem nebo pro zdokumentování specifických informací o třídě.
+
+\item \textbf{Barva výplně:} 
+
+Nastavení barvy výplně se zobrazí pouze pro třídy typu polygon. Určuje barvu, kterou bude mít vnitřní prostor polygonu. Tato barva musí obsahovat transparentnost, což umožňuje vidět prvky nacházející se pod polygonem.
+
+\end{itemize}
+
+\subsubsection{Prioritizace datasetů v rámci projektu}
+Efektivní řízení a organizace datasetů jsou klíčovými aspekty jakéhokoli datově orientovaného projektu. Zásadním prvkem je nastavení priorit těchto datových sad. Proces nastavování priorit je vyřešen pomocí drag and drop komponenty, ve které je zobrazen seznam všech datasetů v projektu, viz \vref{fig:p_poradi}. Priorita se nastavuje od nejvyšší po nejnižší, přičemž dataset s nejvyšší prioritou je na vrcholu seznamu.
+
+\obrazek[0.7\textwidth]{projekt/priorita.png}{Nastavení priority datasetů v projektu}{fig:p_poradi}
+
+Administrátoři mohou každou datovou sadu řádně a jednoduše zařadit podle důležitosti. Prioritizace má zásadní význam pro automatické přiřazování obrázků anotátorům. Systém s dobře nastavenými prioritami může efektivně a logicky rozdělovat obrázky k anotaci. Tento postup optimalizuje využití času a zdrojů, což přispívá k účinnosti celého projektu.
+

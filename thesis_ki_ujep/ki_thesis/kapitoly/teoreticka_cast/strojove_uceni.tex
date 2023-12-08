@@ -1,0 +1,31 @@
+\section{Strojové učení}
+Strojové učení je obor informatiky, který se zabývá vývojem algoritmů a matematických modelů. Tyto algoritmy se opírají o~soubor příkladů určitého jevu. Příklady mohou pocházet z přírody, mohou být vytvořené člověkem nebo jiným algoritmem. Strojové učení lze také charakterizovat jako proces řešení praktických problémů pomocí 2 kroků -- nejdříve musí být data shromážděna, poté se na jejich základě algoritmicky vytvoří statistický model. Tento model později slouží k řešení praktických problémů. Souboru vstupních dat v~kontextu strojového učení se říká dataset. \cite{bishop2006pattern}
+
+\subsubsection{Typy strojového učení}
+Strojové učení lze rozdělit do několika kategorií, a to supervizované, částečně supervizované, nesupervizované a zpětnovazební učení. Tato práce se zabývá získáváním vstupních dat pro supervizované učení, nicméně níže jsou stručně popsány hlavní rozdíly vstupních dat mezi jednotlivými typy strojového učení.\cite{burkov2019}
+
+\subsubsection{Supervizované učení}
+Supervizované strojové učení je oblast strojového učení, kde se modely učí z označených trénovacích dat a aplikují se na nová neoznačená data k predikci výstupních hodnot. Požadavky na vstupní data jsou následující: 
+\begin{itemize}
+    \item \textbf{Označená data:}
+    
+    Supervizované učení vyžaduje soubor dat s přesně definovanými výstupními hodnotami.
+    \item \textbf{Kvalitní a relevantní data:} 
+    
+    Data musí být reprezentativní a bez chyb.
+    \item \textbf{Předzpracovaná data:} 
+    
+    Nutné provést čištění, normalizaci a kódování dat.
+\end{itemize}
+
+Supervizované strojové učení zahrnuje algoritmy, které se učí vztah mezi vstupními a výstupními proměnnými. Používá se například v klasifikaci, regresi a doporučovacích systémech. \cite{bishop2006pattern}
+
+\subsubsection{Částečně supervizované učení}
+Tento typ učení se pohybuje na pomezí supervizovaného a nesupervizovaného učení, kdy je k~dispozici velké množství neoznačených dat a menší množství označených dat. Částečně supervizované učení využívá informace z~obou typů pro vytvoření efektivnějšího modelu než v~případě supervizovaného nebo nesupervizovaného učení samostatně.\cite{burkov2019}
+
+\subsubsection{Nesupervizované učení}
+Algoritmy nesupervizovaného učení se soustředí na identifikaci skrytých struktur nebo vzorců v neoznačených datasetech. Tato kategorie algoritmů je zásadní pro úlohy, kde je potřeba detekovat anomálie nebo provádět segmentaci dat bez předchozího označení.\cite{elnaqa2015machine}
+
+\subsubsection{Zpětnovazební učení}
+Zpětnovazební učení představuje přístup v~oblasti strojového učení, kde model interaguje s daným prostředím a učí se na základě zpětné vazby, která může být ve formě odměn nebo trestů. Uplatnění nachází zejména v~oblastech robotiky a hraní her. Cílem zpětnovazebního učení je vyvinout optimální strategii chování, která maximalizuje kumulativní součet odměn získaných v~průběhu interakce s~prostorem.
+\cite{bishop2006pattern}

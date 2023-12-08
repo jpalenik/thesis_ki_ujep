@@ -1,0 +1,71 @@
+\section{Použité technologie}
+Pro vývoj této aplikace byly vybrány technologie, které umožňují vytvoření výkonné a uživatelsky přívětivé aplikace. Následující sekce popisuje hlavní technologie použité při vývoji.
+
+\subsection{Node.js} 
+Node.js je asynchronní běhové prostředí, které je řízeno událostmi a umožňuje vývoj a provoz serverových aplikací v jazyce JavaScript. Tento framework\footnote{Framework je strukturovaná sada nástrojů a knihoven v softwarovém inženýrství, která poskytuje předdefinovanou šablonu pro vývoj a nasazování aplikací, zvyšuje opakovanou použitelnost kódu a usnadňuje vývojářům práci díky standardizovaným konvencím a modulům.} nabízí výhodu použití jednoho programovacího jazyka pro vývoj na straně klienta i serveru. Node.js využívá koncept asynchronního programování, což je technika, která umožňuje provádění potenciálně časově náročných úkolů bez nutnosti blokovaní běhu programu a čekání na jejich dokončení. Díky tomu může aplikace reagovat na další události a zpracovávat výsledky úkolů, jakmile jsou k dispozici. \cite{Node.js}
+
+Mezi časově náročné úkoly, které Node.js umožňuje zpracovávat asynchronně, patří například:
+
+\begin{itemize}
+  \item \textbf{Čtení z databáze:}
+  
+  Získávání dat z databáze může být proces s významnou časovou náročností, ovlivněný faktory jako je zpoždění sítě při připojení k databázovému serveru, nebo komplexností samotného dotazu. 
+
+  \item \textbf{Čtení ze souborového systému:} 
+  
+  Proces čtení dat ze souborů uložených na pevném disku může být značně časově náročný. Tato časová náročnost je způsobena různými faktory, včetně rychlosti samotného disku, efektivity souborového systému a také velikostí a formátu čtených dat.
+
+  \item \textbf{Komunikace se vzdáleným serverem:}
+  
+  Komunikace s jinými servery nebo externími službami přes síť může podléhat nepředvídatelným zpožděním, která jsou důsledkem různých faktorů v síťovém prostředí. Tato zpoždění mohou být způsobena omezenou propustností síťového připojení, vysokou zátěží na komunikačních uzlech, případně fyzickou vzdáleností mezi komunikujícími systémy. 
+\end{itemize}
+
+\subsection{Vue.js}
+Vue.js je progresivní JavaScriptový framework vyvinutý Evanem Youem, který byl poprvé představen v únoru 2014. 
+Tato knihovna se zaměřuje na deklarativní vykreslování a skládání prvků. Vývojářům umožňuje efektivně vytvářet uživatelská rozhraní ze znovu použitelných komponent.
+
+Vue.js také poskytuje podporu pro jednosměrné i dvousměrné datové vazby, což usnadňuje správu stavu aplikace. Tento rys umožňuje vývojářům jednoduše sledovat a aktualizovat data ve své aplikaci. Dalším významným prvkem Vue.js je jeho schopnost snadné integrace s různými projekty a knihovnami. To dává vývojářům flexibilitu používat jen ty části kódu, které potřebují pro svůj konkrétní projekt.
+
+Vue.js se rychle stává oblíbeným frameworkem pro vývoj moderních webových aplikací díky své jednoduchosti a efektivitě při tvorbě uživatelských rozhraní.\cite{Vue.js}
+
+\subsection{Architektura aplikací ve Vue.js}
+Pro tuto aplikaci, která je popisována v této bakalářské práci, byla zvolena architektura jednostránkové aplikace (SPA - Single-Page Application). Jedná se o moderní přístup vývoje webových aplikací, který využívá technologii JavaScriptu. SPA nabízí uživatelům přívětivější uživatelské rozhraní a rychlejší odezvu ve srovnání s klasickými webovými aplikacemi.
+
+SPA se odlišuje od tradičních webových stránek tím, že veškerý obsah je načten a zobrazen na jediné stránce, a to za použití různých technik JavaScript API, jako jsou ajax, fetch a manipulace s DOM. Tímto způsobem může dynamicky aktualizovat obsah bez nutnosti opakovaného načítání celé stránky ze serveru. Data a celé uživatelské rozhraní jsou ukládány a spravovány lokálně. SPA rovněž poskytuje možnost routování, které umožňuje změnu adresy URL v prohlížeči podle aktuálního stavu aplikace. Tento přístup se liší od klasických webových aplikací, kde se při každé interakci s aplikací musí stahovat a načítat nové stránky ze serveru.
+
+Je však třeba zdůraznit, že jedna z nevýhod použití SPA spočívá v horší možnosti indexování obsahu vyhledávači a optimalizaci pro vyhledávače (SEO\footnote{
+SEO, nebo "Search Engine Optimization" je soubor praktik a technik zaměřených na optimalizaci webových stránek pro vyhledávače s cílem zvýšit jejich viditelnost a pozici ve výsledcích vyhledávání.}). Další výzvou je implementace správy navigace v rámci aplikace a sledování výkonu, pro co nejlepší uživatelský zážitek. \cite{MDN_spa_2023}
+
+\subsection{Paper.js}
+Pro výběr knihovny pro 2D editor byla nezbytná volba takového nástroje, který podporuje manipulaci s vektorovou grafikou, zejména s ohledem na jednoduchou konverzi do formátu GeoJSON. Vektorová grafika se zakládá na matematických vztazích a křivkách, což umožňuje uchovat kvalitu a detaily obrazu i při různých úrovních zvětšení.
+
+Pro dosažení stanoveného cíle byla zvolena knihovna Paper.js z důvodu jejího jednoduchého použití a rozšiřitelnosti. Tato open-source knihovna je postavena na technologiích HTML5 Canvas, což je HTML5 prvek umožňující vykreslování grafiky pomocí JavaScriptu. Paper.js poskytuje objektový model dokumentu a umožňuje snadné vytváření prvků, jako jsou body, trojúhelníky, křivky a cesty. Mezi důležité funkce knihovny Paper.js patří také poskytování rozhraní pro zachycení různých událostí, včetně kliknutí nebo pohybu myší, stisku klávesy a dalších interakcí. \cite{Paper.js}
+
+\subsection{Git}
+Git představuje distribuovaný systém správy verzí, který je navržen k efektivnímu sledování změn v souborech a koordinaci práce mezi programátory během procesu vývoje softwaru. Jeho hlavními cíli jsou zajištění vysoké rychlosti, zabezpečení integrity dat a podpora pro distribuované, ne-lineární pracovní postupy. Klíčovou vlastností toho nástroje je schopnost vytvářet větve, díky kterým mohou programátoří pracovat na rozdílných funkcích nezávisle a následně tyto větve efektivně sloučit do hlavní větve projektu. \cite{chacon2014progit}
+
+Git si získal širokou popularitu a je aplikován v různých odvětvích, včetně podnikání, financí, zdravotnictví a vědeckého výzkumu, pro správu a verzování kódu. Jako open-source software je volně dostupný pro užití a modifikaci. Otevřený kód podporuje rozšíření a adaptabilitu v různých prostředích. \cite{mijacobs_git_azure_2023}
+
+V této bakalářské práci byla zmíněná knihovna využita pro verzování kódu vyvíjené aplikace. Vedle toho se uplatnila také pro verzování anotací. Demonstruje to její flexibilitu a rozmanité využití v oblasti softwarového inženýrství.\cite{Git}
+
+\subsection{MySQL}
+MySQL je open-source relační databázový systém (RDBMS), jehož název vznikl spojením jména "My", což je jméno dcery spoluzakladatele Michaela Wideniuse, a akronymu "SQL" pro Structured Query Language. Tento relační databázový systém umožňuje organizovat data do jedné či více datových tabulek, ve kterých mohou být data vzájemně propojena, což napomáhá efektivně strukturovat data. MySQL je kompatibilní s řadou operačních systémů, včetně Linuxu, macOS a Windows, a podporuje programovací jazyky jako C a C++.
+
+Nejnovější verze MySQL Server 8.0 byla oznámena v dubnu 2018 a přinesla řadu významných inovací. Mezi tyto novinky patří NoSQL Document Store, atomické a bezpečné DDL příkazy a rozšířená JSON syntaxe. Dále nabízí vylepšené možnosti řazení a částečné aktualizace. Tato verze zaznamenala významné vylepšení v oblastech výkonu, bezpečnosti a správy. V roce 2019 byl MySQL vyhlášen DBMS roku podle hodnocení DB-Engines. \cite{MySQL}
+
+\subsection{GeoJSON}
+GeoJSON je otevřený standardní formát navržený pro reprezentaci geografických datových struktur s využitím JavaScript Object Notation (JSON). Tento formát umožňuje reprezentovat jak prostorové regiony (Geometrie), tak prostorově ohraničené entity (Prvky), nebo seznamy prvků (Kolekce prvků). GeoJSON podporuje široké spektrum aplikací, od webového mapování po navigační systémy.
+
+GeoJSON definuje následující typy geometrie: 
+\begin{itemize}
+    \item bod (Point),
+    \item liniový řetězec (LineString),
+    \item vícebod (MultiPoint),
+    \item víceliniový řetězec (MultiLineString),
+    \item vícepolygon (MultiPolygon),
+    \item kolekce geometrií (GeometryCollection).
+\end{itemize}
+
+Prvky v GeoJSON obsahují geometrický objekt a další vlastnost. Kolekce prvků obsahuje seznam prvků.
+
+Pracovní skupina pro formát GeoJSON byla zahájena v březnu 2007 a specifikace formátu byla dokončena v červnu 2008. V dubnu 2015 založila Internet Engineering Task Force pracovní skupinu Geographic JSON, která v srpnu 2016 vydala GeoJSON jako RFC 7946. Od té doby si formát GeoJSON získal širokou popularitu a je využíván v mnoha webových technologiích a aplikacích. \cite{butler_geojson_2016}

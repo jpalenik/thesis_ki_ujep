@@ -1,0 +1,62 @@
+\section{Uživatelské role}
+
+V kontextu vyvíjené aplikace je zásadní implementace uživatelských rolí, díky kterým je možné dodržet efektivní kontrolu kvality práce a kontrolu přístupu do systému podle RBAC. Mezi hlavní role patří administrátor, supervizor, anotátor a účetní, přičemž každá z nich zastává specifickou funkci a odpovědnost. V následujícím textu bude podrobněji rozebrán význam a činnosti těchto rolí v rámci systému. Role jsou seřazeny podle oprávnění, od nejnižší po nejvyšší. 
+
+\subsubsection{Anotátor}
+Role anotátora zahrnuje několik klíčových funkcí a pracovních postupů, které zajišťují efektivní zpracování obrázků a jejich anotací. Anotátor je uživatel, který edituje označení obrázků.
+Po přihlášení do aplikace vidí přehled jemu přiřazených obrázků k editaci. Pro zajištění efektivního zpracování obrázků by měl anotátor pracovat sekvenčně, což znamená, že může začít editovat další obrázek až po odevzdání aktuálně rozpracovaného ke kontrole.
+
+Pokud je anotátorovi vrácen obrázek k opravě, zobrazí se mu v přehledu se zvýrazněním obrázku, který má editovat prioritně. Může editovat a prohlížet pouze ty obrázky, které jsou mu aktuálně přiřazeny. Po odevzdání všech rozpracovaných obrázků může žádat o další soubory z fronty. Kliknutím na tlačítko v aplikaci se anotátorovi automaticky přiřadí obrázek, který nebyl nikým editován. Přiřazení obrázku se provádí na základě projektů, které má anotátor přiřazené. Vybere se obrázek z datasetu a projektu, který má nejvyšší prioritu.
+
+Anotátor musí mít přístup k přehledu o operacích, které sám v systému provedl. Patří sem uložení anotace na server a odevzdání anotací ke kontrole supevizorem. Anotátor by měl mít možnost zobrazit si jednoduchý přehled, který si může filtrovat podle rozsahu dat. V tomto přehledu by měl vidět čas strávený anotováním, počet editovaných obrázků a počet projektů, ze kterých obrázky pocházely.
+
+Anotátor nemá právo vidět informace o ostatních uživatelích a jejich projektech. Nemá možnost editovat ani prohlížet anotace, které mu nejsou aktuálně přiřazeny. Nemůže prohlížet projekty ani jejich historii.
+
+\subsubsection{Účetní}
+Role účetní je v systému důležitá, neboť jsou anotátoři za svou odvedenou práci finančně odměňováni. Aby účetní mohl zpracovávat výplaty a spravovat kontaktní údaje anotátorů, musí mít přístup do aplikace. Přihlášení do aplikace mu umožňuje získat seznam všech uživatelů, zobrazit si a upravit jejich kontaktní informace.
+Pro správné zpracování výplat je důležité, aby účetní měl jednoduchý přehled o odpracovaných hodinách anotátorů za daný měsíc. Use case diagram učetní, viz \vref{fig:use_case_uc}.
+
+\obrazek{uziv_role/use-case-ucetni.png}{Use case diagram role účetní}{fig:use_case_uc}
+
+Přehled odpracovaných hodin je zajištěn prostřednictvím tabulky viz tabulka \vref{fig:uziv_stat}, která obsahuje seznam všech uživatelů s celkovým součtem odpracovaných hodin.
+V rámci výplatního procesu je odpracovaný čas zaokrouhlen na nejbližší půlhodinu nahoru. Z důvodu zpracování výplat v účetním systému musí mít účetní možnost stáhnout přehled v CSV formátu (viz tabulka \vref{lst:csvdata}). Exportovaný soubor obsahuje jméno anotátora, e-mailovou adresu a součet odpracovaných hodin za vybrané období. 
+
+\obrazek{uziv_role/statistika.png}{Tabulka s přehledem odpracovaných hodin}{fig:uziv_stat}
+
+Obsah souboru může být následovný:
+\begin{lstlisting}[language={}, caption=Exportovaný výpis hodin, label=lst:csvdata]
+name,email,hours
+Jan Páleník,jan.palenik@microsoft.example.com,03:20
+Jakub Marek,jakub.marek@microsoft.example.com,12:20
+\end{lstlisting}
+
+Účetní má v systému omezený přístup, který zahrnuje pouze možnost zobrazovat kontaktní údaje uživatelů a mít přístup k sekci s přehledem odpracovaných hodin. Ovšem není oprávněn prohlížet projekty ani jiné části systému, které jsou spojené s anotacemi a označováním dat. Toto omezení reflektuje pracovní 
+povinnosti účetní, které se zaměřují na účetnictví a sledování odpracovaného času, a nikoli na správu projektů či anotací. 
+
+\subsubsection{Supervizor}
+Jednou z klíčových rolí supervizora je kontrola obrázků v projektech, které konkrétní supervizor spravuje. Supervizor nese zodpovědnost za ověření kvality anotací na odevzdaných označených obrázcích. V případě nedostatků může obrázky vrátit anotátorům k opravě. V opačném případě je schvaluje. 
+
+Tímto způsobem supervizor zajistí, že výsledné anotace dosáhnou nejvyšší možné kvality a budou splňovat požadavky projektu. Supervizor má také možnost upravovat prioritu souborů, které jsou již přiřazeny anotátorovi. Tato funkce umožňuje supervizorovi brát v úvahu důležitost jednotlivých souborů a přizpůsobit jejich pořadí v rámci anotátorovy fronty obrázků.
+
+Supervizor může prohlížet projekty a jejich historii pouze v případě, že mu byli přiděleny k supervizi. Nemůže editovat nastavení projektu ani přidávat nové obrázky.
+
+\subsubsection{Administrátor}
+Administrátor má veškeré pravomoci ostatních rolí, což mu umožňuje efektivně spravovat a kontrolovat celý systém, zajišťovat kvalitu anotací a efektivně řídit práci anotátorů a supervizorů. Následující práva má navíc.
+
+\begin{itemize}
+    \item \textbf{Správa uživatelů a oprávnění k projektům: }
+    
+  Může editovat oprávnění uživatelů, měnit jejich role, aktivovat či deaktivovat jejich účty a nastavovat povolené projekty pro jednotlivé uživatele. To zajišťuje, že anotátoři a supervizoři mají přístup pouze k relevantním informacím a projektům.
+
+  \item \textbf{Práce s datasety:}
+  
+Administrátor může vytvářet nové datasety a nahrávat do nich obrázky. Pro lepší organizaci a přehlednost může ke každému typu datasetu definovat atributy, například GPS souřadnice, jejichž hodnoty může upravovat přímo v datasetu nebo u jednotlivých obrázků.
+
+  \item \textbf{Správa projektů:}
+  
+Administrátor je zodpovědný za vytváření projektů, přidávání obrázků z datasetů a vytváření seznamu tříd pro označování obrázků. Může také exportovat anotace a měnit prioritu projektů či datasetů v rámci projektu, což ovlivňuje frontu obrázků pro anotátory.
+
+  \item \textbf{Supervize:}
+  
+Administrátor má možnost kontrolovat obrázky schválené supervizorem a rozhodovat o konečném schválení anotace.
+\end{itemize}

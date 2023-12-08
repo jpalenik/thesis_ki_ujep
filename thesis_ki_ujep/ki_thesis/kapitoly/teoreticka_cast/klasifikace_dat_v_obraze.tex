@@ -1,0 +1,26 @@
+\section{Klasifikace dat v obraze}
+
+V oblasti strojového učení je klasifikace dat v~obraze klíčovou disciplínou, která má široké uplatnění v~různých průmyslových a vědeckých oblastech, jako je zdravotnictví, bezpečnost, doprava a zemědělství \cite{liu2020}. Tato oblast se zabývá rozpoznáváním a kategorizací objektů a vzorců v~digitálních obrazech.
+
+Strojové učení, zejména metody jako konvoluční neuronové sítě (CNN), se ukázalo být velmi efektivní v řešení těchto úkolů \cite{krizhevsky2012}. CNN, inspirované biologickými procesy, se dokáží učit hierarchickým reprezentacím dat. Toto je zásadní pro práci s obrazy, které lze považovat za hierarchické struktury dat \cite{lecun2015}.
+
+Fáze klasifikace dat v~obraze se zabývá identifikací a kategorizací obsahu obrazových dat. Stěžejní aspekty této fáze zahrnují:
+
+\begin{itemize}
+    \item předzpracování obrazu,
+    \item extrakce rysů,
+    \item trénování modelu,
+    \item klasifikace.
+\end{itemize}
+
+\subsubsection{Předzpracování obrazu}
+Předzpracování obrazu se soustředí na přípravu obrazu pro další zpracování. Zahrnuje odstranění šumu, normalizaci intenzity, kontrastní úpravy a další techniky, které zlepšují kvalitu obrazu pro analýzu. Cílem je odstranit nežádoucí variace v~datech, které by mohly negativně ovlivnit proces klasifikace.
+
+\subsubsection{Extrakce rysů}
+Po předzpracování následuje extrakce rysů, kde jsou z~obrazu identifikovány a extrahovány charakteristiky, které jsou relevantní pro klasifikaci. Tyto rysy mohou zahrnovat textury, tvary, barvy, kontury nebo jiné vizuální atributy. Účelem extrakce rysů je převést surová obrazová data na formu, která je vhodnější pro analýzu a klasifikaci.
+
+\subsubsection{Trénování modelu}
+Ve fázi trénováni modelu se používají algoritmy strojového učení k~vytvoření modelu, který dokáže rozpoznat a klasifikovat různé kategorie nebo objekty v obraze. Model se trénuje na sadě označených dat, kde je každá část snímku přiřazena ke~konkrétní kategorii nebo třídě.
+
+\subsubsection{Klasifikace}
+Po trénování modelu se provádí klasifikace nových, neviděných obrázků. Model používá naučené vzory a charakteristiky k identifikaci a klasifikaci těchto snímků do relevantních kategorií. \cite{zhang2016}

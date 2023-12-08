@@ -1,0 +1,30 @@
+\section{Uživatelské role}
+ 
+Role-based access control (RBAC), neboli řízení přístupu založené na uživatelských rolích, je zásadním prvkem v~oblasti bezpečnosti počítačových systémů. Jeho cílem je omezit přístup k systémovým zdrojům jen pro autorizované uživatele, a to na základě specifických rolí a oprávnění přiřazených těmto rolím. RBAC implementuje povinné (MAC) nebo diskreční (DAC) přístupové kontroly.
+
+\begin{itemize}
+  \item \textbf{Mandatory Access Control (MAC):}
+  
+  Přístupová kontrola typu MAC je založena na pevně stanovených pravidlech, která určují, jaký přístup mají uživatelé k určitým systémovým zdrojům. V MAC systémech nelze pravidla přístupu jednoduše měnit bez specifických oprávnění. Tento přístup je typický pro prostředí vyžadující vysokou míru bezpečnosti, jako jsou vojenské nebo vládní organizace.
+
+  \item \textbf{Discretionary Access Control (DAC):}
+  
+  Diskreční přístupová kontrola umožňuje uživatelům s určitými oprávněními určovat a měnit pravidla přístupu. Uživatelé tak mají větší kontrolu nad tím, kdo může přistupovat k jejich datům. Tento systém nabízí větší flexibilitu, ale může přinášet vyšší bezpečnostní rizika kvůli možnosti individuálního nastavení přístupových práv.
+\end{itemize}
+
+RBAC definuje role pro různé pracovní funkce v organizaci a přiřazuje oprávnění těmto rolím. Uživatelé získávají oprávnění prostřednictvím svých rolí, které zjednodušují správu práv a bezpečnostní politik. RBAC uplatňuje tři základní pravidla: 
+\begin{itemize}
+    \item přiřazení role,
+    \item autorizace role,
+    \item autorizace oprávnění.
+\end{itemize}
+Tyto principy zajišťují, že uživatelé mohou využívat pouze oprávnění, pro která jsou autorizováni.
+
+\subsection{Význam RBAC pro skrývání prvků aplikace}
+RBAC umožňuje znepřístupnit prvky aplikace, které daný uživatel nemá oprávnění vidět. Příkladem může být skrytí prvku z uživatelského rozhraní, nebo deaktivace tlačítka nebo elementu. Schopnost znepřístupnit prvky je zásadní pro udržení bezpečného a efektivního aplikačního prostředí, kde má každý uživatel přístup jen k těm informacím a funkcím, které jsou pro jeho roli určené.
+
+Role v kontextu informačních systémů lze popsat jako definovaný soubor přístupových oprávnění, který určuje, co může uživatel v systému dělat. Každá role může zahrnovat různá oprávnění, například čtení, úpravy, vytváření nebo mazání konkrétních dat. Uspořádání do rolí umožňuje efektivně spravovat přístupová práva různých uživatelů, neboť každé oprávnění nemusí být přidělováno individuálně, ale může být součástí předdefinované role.
+
+Různé role mohou obsahovat stejná oprávnění. Například, role "anotátor" a "administrátor" mohou obě zahrnovat oprávnění k editaci anotací, ale role administrátor může mít navíc oprávnění k správě uživatelských účtů, zatímco role anotátora ne. Umožňuje větší flexibilitu a atomickou kontrolu nad tím, co jednotlivé role ve skutečnosti umožňují.
+
+Role-based access control (RBAC) představuje efektivní metodu pro správu přístupu k systémovým zdrojům a je zásadní pro zajištění bezpečnosti a efektivity v moderních informačních systémech. Omezení přístupu, k určitým částem aplikace pouze pro autorizované uživatele, je důležité pro ochranu citlivých dat a zajištění bezpečného uživatelského prostředí. RBAC rovněž napomáhá udržovat konzistenci a stabilitu aplikace tím, že zabraňuje uživatelům bez potřebných oprávnění a znalostí provádět změny v nastavení nebo konfiguraci. \cite{ferraiolo1992role}

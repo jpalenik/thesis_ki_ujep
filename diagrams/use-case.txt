@@ -1,0 +1,23 @@
+@startuml
+!define ACTOR(x) actor x as "**x**"
+left to right direction
+
+package "Účetní role" {
+    ACTOR(Učetní)
+
+    usecase Přihlášení_do_systému as "Přihlášení do systému"
+    usecase Zpracování_výplat as "Zpracování výplat"
+    usecase Sledování_odpracovaných_hodin as "Sledování odpracovaných hodin"
+    usecase Export_odpracovaných_hodin as "Export odpracovaných hodin"
+
+    Učetní --> Přihlášení_do_systému
+    Učetní --> Zpracování_výplat 
+    Učetní --> Sledování_odpracovaných_hodin 
+
+    Sledování_odpracovaných_hodin <.. Export_odpracovaných_hodin : <<extends>>
+    Sledování_odpracovaných_hodin ..> Přihlášení_do_systému : <<include>>
+    Zpracování_výplat ..> Přihlášení_do_systému : <<include>>
+}
+
+@enduml
+

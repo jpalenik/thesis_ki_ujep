@@ -1,0 +1,70 @@
+\section{Datasety}
+Pod pojmem "dataset" lze chápat soubor dat, která mají shodné nebo podobné vlastnosti vhodné pro trénink algoritmů strojového učení. Tato data obvykle představují rozsáhlé soubory, zejména obrázků, které obsahují opakující se vzory nebo struktury. Příklady takových datasetů mohou zahrnovat různé typy krajiny, budovy ve městech, přírodní prvky jako stromy nebo terénní útvary jako hory a řeky.
+
+Pro úspěšné tréninkové algoritmy strojového učení je nezbytné, aby dataset obsahoval různé vzory a varianty objektů, které mají být klasifikovány. Například, pokud algoritmus má být naučen rozpoznávat budovy ve městě New York, měl by dataset obsahovat správně označené obrázky výškových budov, které jsou charakteristické pro tento konkrétní kontext. Naopak, pokud by algoritmus byl trénován pouze na těchto budovách, neměl by schopnost rozpoznat a klasifikovat jiné objekty, jako jsou pole v nizozemské krajině.
+
+Je také důležité zdůraznit, že vstupní data mohou být velmi rozsáhlá, dosahující desítek gigabajtů. Z tohoto důvodu je důležité zajistit, aby data nebyla duplikována a bylo je možné efektivně organizovat a spravovat, což je klíčovým prvkem pro úspěšné tréninkové procesy strojového učení.
+
+\subsubsection{Vytvoření datasetu}
+Pro přidávání datasetů do aplikace je nejprve potřeba otevřít formulář pro vytvoření nového datasetu, viz obrázek \vref{fig:ds_form}.
+\obrazek[1\textwidth]{dataset/form_vytvorit.png}{Formulář pro vytvoření datasetu}{fig:ds_form}
+
+Při vytváření datasetu je třeba vyplnit následující atributy:
+
+\begin{itemize}
+    \item \textbf{Jméno:}
+    
+    Uživatelský popis datasetu. Měl by být výstižný a stručný, aby uživatelé snadno identifikovali obsah datasetu.
+
+    \item \textbf{Alias:}
+    
+    Je standardizované technické jméno, používané pro export dat. Měl by být zvolen anglický název bez mezer nebo s podtržítky.
+
+    \item \textbf{Typ datového souboru:}
+    
+    Specifikuje typ souboru v datasetu, pro tento projekt je definován typ souboru \textit{obrázek}. Počítá se s rozšířením o typ \textit{3d obrázek}.
+
+    \item \textbf{Ikona:}
+    
+    Slouží pro lepší vizuální rozpoznání datasetu uživatelem. Ikona je vybírána prostřednictvím vyskakovacího okna s výběrem desítek ikon z knihovny Font Awesome \footnote{Font Awesome je populární knihovna ikon, která poskytuje širokou škálu vektorových ikon a sociálních log. Tyto ikony lze snadno integrovat do webových a mobilních aplikací. Více informací naleznete na oficiálních stránkách: \url{https://fontawesome.com/}}.
+
+    \item \textbf{Popis:}
+    
+    Poskytuje dodatečné informace o datasetu, například jeho účel nebo zdroj.
+
+    \item \textbf{Atributy:}
+    
+    Nastavení hodnot definovaných atributů. Detailněji jsou popsány v následující sekci. 
+\end{itemize}
+
+\subsubsection{Atributy datasetu a obrázků}
+Slouží k definování specifických informací o datasetu jako jsou rozlišení obrázků, zeměpisné souřadnice a další. Hodnoty těchto atributů lze nastavit pro celý dataset, přičemž jsou automaticky zahrnuty v exportovaných anotacích ve formátu JSON. Zajímavým aspektem je možnost individuální úpravy těchto atributů u každého jednotlivého obrázku v datasetu. 
+    
+Tato flexibilita je zásadní, neboť některé atributy, jako jsou zeměpisné souřadnice, se mohou lišit obrázek od obrázku. Naopak rozlišení snímků by mělo být konzistentní napříč celým datasetem. Administrátor má možnost tyto atributy definovat a upravovat prostřednictvím následujícího formuláře, jak je ilustrováno na obrázku \vref{fig:ds_at_form}. 
+
+Pro potřeby definování specifických atributů odpovídajících požadavkům datasetu a aktuálním potřebám týmu pracujícího na projektech strojového učení bylo rozhodnuto využít knihovnu pro dynamické generování formulářů. Tato knihovna umožňuje definování a vykreslování formulářů na základě struktury definované ve formátu JSON.
+
+Atributy a jejich specifikace jsou vytvářeny pomocí JSON formátu, což usnadňuje generování interaktivních formulářů s příslušnými atributy. Pro tyto účely byla vybrána knihovna \texttt{vue-form-generator}, která je dostupná na platformě npmJS. Tato knihovna poskytuje flexibilní a intuitivní nástroje pro tvorbu formulářů v aplikacích Vue.js, což umožňuje efektivní implementaci bez nutnosti dodatečných změn kódu. Pro více informací a dokumentaci knihovny \texttt{vue-form-generator} navštivte \url{https://www.npmjs.com/package/vue-form-generator}.
+
+\obrazek[0.7\textwidth]{dataset/definice_atributu.png}{Editace atributů datasetu}{fig:ds_at_form}
+
+\subsection{Nahrávání obrázků}
+Po úspěšném vytvoření datasetu je dalším krokem nahrání obrázků. Nahrávání probíhá následovně:
+
+\begin{enumerate}
+    \item \textbf{Nahrání obrázku:}
+
+    Po otevření datasetu lze přidat obrázky prostřednictvím jednoduché uživatelské komponenty, do kterých je možné nahrát soubory přímo z disku počítače. Během nahrávání může uživatel sledovat průběh nahrávání. V případě, že se administrátor pokusí nahrát soubor v nekompatibilním formátu, je mu zobrazena chybová hláška. Způsob nahrávání souborů je vidět na obrázku \vref{fig:ds_nahrani}.
+
+    \obrazek[0.7\textwidth]{dataset/nahravani.png}{Nahrávání obrázků}{fig:ds_nahrani}
+
+    \item  \textbf{Prohlížení a editace atributů}
+
+    Po úspěšném nahrání jsou soubory zobrazeny v tabulce pod kartou s nahráváním. Uživatel má možnost prohlížet nahrané soubory a editovat jejich atributy. Kliknutím na detail souboru se otevře modální okno. Například, pokud jsou nastaveny atributy zeměpisné šířky a výšky, zobrazí se v tomto okně mapa s bodem nastavených souřadnic.
+\end{enumerate}
+
+\subsection{Význam atributů}
+Atributy jsou klíčové pro kontrolu a zjednodušení použití, neboť anotátoři mohou místo pořízení fotografie snadno zobrazit v Google Mapách či jiných mapových službách, což napomáhá přesnějšímu označování a určování tříd. Detailní náhled funkcionalit je na ukázce \vref{fig:ds_nahled}.
+\obrazek[0.7\textwidth]{dataset/nahled.png}{Náhled obrázku}{fig:ds_nahled}
+
+

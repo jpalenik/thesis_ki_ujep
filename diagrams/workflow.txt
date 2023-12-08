@@ -1,0 +1,50 @@
+@startuml
+participant Administrátor
+participant Aplikace
+participant Supervizor
+participant Anotátor
+
+== Přiřazení obrázků ==
+Administrátor -> Aplikace: Založí projekt
+Administrátor -> Aplikace: Nastaví klasifikační třídy
+Administrátor -> Aplikace: Přidá obrázky do projektu
+
+== Přiřazení supervizora k projektu ==
+Administrátor -> Aplikace: Přidá právo supervizorovi na projekt
+
+== Cyklus anotace a kontroly ==
+loop Anotace obrázků
+    Supervizor -> Anotátor: Přiřadí obrázky
+    activate Anotátor
+    Anotátor -> Anotátor: Označuje obrázek
+
+== Kontrola správnosti anotace ==
+    Anotátor -> Supervizor: Odevzdá ke kontrole
+    deactivate Anotátor
+    activate Supervizor
+        Supervizor -> Supervizor: Zkontroluje obrázek
+
+        alt Obrázek schválen
+            Supervizor -> Administrátor: Schválí obrázek
+            deactivate Supervizor
+            activate Administrátor
+        else Obrázek vrácen k opravě
+            loop Oprava odevzdané anotace
+               Supervizor -> Anotátor: Vrátí k opravě
+               deactivate Supervizor
+               activate Anotátor
+               Anotátor -> Anotátor: Označuje obrázek
+               Anotátor -> Supervizor: Opraví a vrátí ke kontrole
+               deactivate Anotátor
+            end
+        end
+end
+
+== Export dat ==
+Administrátor -> Aplikace: Export dat
+deactivate Administrátor
+activate Aplikace
+Aplikace -> Administrátor: Vrátí GeoJSON
+deactivate Aplikace
+activate Administrátor
+@enduml

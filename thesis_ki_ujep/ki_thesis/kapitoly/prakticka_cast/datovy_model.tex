@@ -1,0 +1,102 @@
+\section{Datový model}
+
+Tato sekce popisuje hlavní části datového modelu. Vzhledem k praktičnosti byly všechny databázové entity pojmenovány anglicky.
+
+\subsection{Správa uživatelů}
+Pro správu uživatelů bylo navrženo 5 základních tabulek, viz \vref{fig:db_user}.
+
+\obrazek[\textwidth]{db/user.png}{Správa uživatelů}{fig:db_user}
+
+Hlavní tabulky a jejich účel jsou následovné:
+
+\begin{itemize}
+  \item \textbf{user (uživatel):}
+  
+  Tabulka 'user' obsahuje základní informace o uživatelích, včetně unikátního identifikátoru typu int, jména, příjmení, emailu a telefonního čísla. Pro další kontaktní údaje, například uživatelské jméno na platformě RocketChat\footnote{RocketChat je open-source webová chatovací platforma, která nabízí funkce jako jsou skupinový chat, přímé zprávy, a další komunikační nástroje. Více informací lze nalézt v oficiální dokumentaci: \url{https://docs.rocket.chat/}}, se využívá formát JSON kvůli flexibilitě.
+  
+  \item \textbf{auth\_method (autorizační metoda):}
+  
+  Číselník 'auth\_method' slouží pro různé metody autorizace, jako jsou účty na Microsoft Azure\footnote{Microsoft Azure je cloudová platforma od společnosti Microsoft, která nabízí širokou škálu cloudových služeb. Více informací naleznete v oficiální dokumentaci: \url{https://docs.microsoft.com/en-us/azure/}} nebo Google. Sloupec "config" je určen pro konfiguraci konkrétní autorizační metody.
+
+  \item \textbf{user\_auth\_method (uživatel\_autorizační metoda):}
+  
+  Tabulka 'user\_auth\_method' propojuje uživatele a autorizační metody. Vazba typu m:n umožňuje více účtů pro jednoho uživatele. Sloupec "account\_id" obsahuje identifikátor účtu a "flag\_allowed" určuje, zda je daná metoda pro uživatele povolena či zakázána.
+
+  \item \textbf{role:}
+  
+  V tabulce 'role' je definován seznam rolí v systému. Primárním klíčem je alias role, který usnadňuje výběr rolí.
+
+  \item \textbf{user\_role (uživatel\_role):}
+  
+  Tabulka 'user\_role' umožňuje přiřazení více rolí jednomu uživateli.
+
+\end{itemize}
+
+
+\subsection{Projekt a klasifikační třídy}
+
+Uchování informací o projektech a klasifikačních třídách je realizováno prostřednictvím databázových tabulek, jak je ilustrováno na \vref{fig:db_proj}:
+
+\obrazek[\textwidth]{db/projekt.png}{Projekt a klasifikační třídy}{fig:db_proj}
+
+\begin{itemize}
+  \item \textbf{project (projekt):}
+
+  Tabulka 'project' používá jako primární klíč číselné ID typu INT, které je automaticky inkrementováno a tudíž je unikátní. Ukládá název projektu a jeho alias pro export. Pokud alias není nastaven, používá se pro export název projektu. Sloupec 'description' obsahuje popis pro administrátora, zatímco 'guide\_description' je určen pro anotátory a zobrazuje se v editoru. Priorita projektu je řešena sloupcem 'priority\_order', kde vyšší hodnota značí větší prioritu.
+
+  \item \textbf{project\_type (typ projektu):}
+  
+  Tabulka 'project\_type' obsahuje číselník typů projektů.
+
+  \item \textbf{class (třída):}
+  
+  Klasifikační třídy jsou ukládány v tabulce 'class'. Význam jednotlivých atributů byl popsán dříve.
+
+  \item \textbf{class\_type (typ třídy):}
+  
+  'class\_type' je číselník typů tříd. Sloupec 'attributes' definuje specifické hodnoty pro nastavení formuláře, například požadavek na barvu výplně v závislosti na typu třídy.
+
+  \item \textbf{project\_user (projekt\_uživatel):}
+  
+  Práva na projekty pro supervizory a anotátory jsou vyřešena tabulkou  'project\_user'. Uživatelé mají přístup pouze k projektům ke kterým existuje vazba v této tabulce.
+
+  \item \textbf{dataset\_project (dataset\_projekt):}
+  
+  Prioritizace datasetů v rámci projektu se řídí pomocí 'dataset\_project'. Při přidání obrázku z dosud nepřiřazeného datasetu do projektu se vytvoří záznam s nejnižší prioritou.
+\end{itemize}
+
+\subsection{Datasety}
+Uložení datasetů je řešeno následujícím způsobem, vizuální přehled databázových entit naleznete na \vref{fig:db_ds}:
+
+\obrazek[\textwidth]{db/dataset.png}{Datasety}{fig:db_ds}
+
+
+\begin{itemize}
+    \item \textbf{dataset:}
+    
+    Datasety jsou ukládány do tabulky 'dataset'. Jako primární klíč je použito generované ID. Pro každý dataset se ukládají informace o jeho názvu a popisu. Alias datasetu funguje podobně jako u projektů. Atributy nastavitelné administrátorem jsou uloženy ve sloupci 'attributes'.
+
+    \item \textbf{dataset\_type (typ datasetu):}
+    
+    Tabulka 'dataset\_type' obsahuje číselník typů datasetů. Na rozdíl od ostatních číselníků v aplikaci zahrnuje nastavení formuláře pro atributy, které jsou uvedeny ve sloupci 'attributes\_defs' (definice atributů).
+
+    \item \textbf{model:}
+    
+    Obrázky nahrávané do aplikace jsou ukládány v tabulce 'model'. Tento název byl zvolen pro obecnost, na rozdíl od možného názvu 'picture'. Umožňuje to přidání nových datových typů bez nutnosti měnit databázový model. Konkrétní nastavení atributů, jako jsou například zeměpisné souřadnice, je uloženo ve sloupci 'attributes'.
+\end{itemize}
+
+\subsection{Anotace}
+Uložení postupu anotace a jejích nastavení je realizováno pomocí několika tabulek, jak je znázorněno na \vref{fig:db_anotace}. Struktura tabulek je následující:
+
+\obrazek[\textwidth]{db/anotace.png}{Anotace}{fig:db_anotace}
+
+\begin{itemize}
+    \item \textbf{annotation (anotace):}
+    Po přiřazení nového obrázku do projektu se vytvoří záznam v tabulce 'annotation'. Tabulka je spojena s projektem, modelem a uživatelem. Propojení s uživatelem je skrze sloupec 'assignee', který označuje přiřazeného uživatele, který může ukládat postup. Příznak 'flag\_to\_fix' indikuje potřebu opravy anotace. Priorita anotace je určena číselnou hodnotou v sloupci priority.
+    
+    \item \textbf{annotation\_update (aktualizace anotace):}
+    Tabulka 'annotation\_update' zachycuje postup anotace, včetně přiřazení do projektu a postupného ukládání. Odkaz na commit\footnote{V Gitu, 'commit' označuje akci uložení sady změn v souborech do lokálního repozitáře. Každý commit má jedinečný identifikátor (hash) a obsahuje informace o změnách, autora změn, a časové razítko. Commit slouží jako zaznamenaný 'snímek' stavu projektu v určitém čase.} v lokálním gitlab repozitáři je uložen ve sloupci 'commit\_hash' spolu s časem commitu a informací o předchozím commitu.
+    
+    \item \textbf{annotation\_status (status anotace):}
+    Tabulka 'annotation\_status' uchovává stavy anotací pro workflow management. Stavy zahrnují přiřazení anotace, její uložení, odevzdání a další, přičemž každý stav má svou ikonu pro lepší přehlednost.
+\end{itemize}
